@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script type="text/javascript">
+
+ws = new WebSocket("ws://localhost:9999/time");
+
+ws.onopen = function() {
+    console.log("connected");
+};
+ws.onmessage = function (event) {
+    var message = event.data;
+    var textarea = document.getElementById('times');
+    textarea.value += message + "\n";
+};
+ws.onclose = function() {
+    console.log("disconnected");
+};
+
+function WebSocketTest() {
+    ws.send((new Date).getTime());
+}
+    </script>
+  </head>
+  <body>
+    <div id="sse">
+      <a href="javascript:WebSocketTest()">Start</a>
+      <br />
+      <textarea id="times"></textarea>
+    </div>
+  </body>
+</html>
+
